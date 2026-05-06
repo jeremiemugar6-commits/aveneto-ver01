@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVeneto — Ameritalian Pasta & Pizza · estd. 1983</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  
+  :root {
+    /* === LOGO-EXACT PALETTE === */
+    --red:       #C8222A;   /* rose red from logo lettering */
+    --red-dark:  #9B1219;   /* deeper rose red */
+    --red-light: #E04050;   /* lighter rose red hover */
+    --navy:      #1A2472;   /* navy blue from ribbon */
+    --navy-dark: #0F1A5A;   /* deep navy */
+    --navy-light:#2E3D9E;
+    --bg:        #FFEBBD;   /* exact logo background */
+    --bg-dark:   #F5D98A;   /* slightly deeper for contrast */
+    --white:     #FFFFFF;
+    --charcoal:  #0F1A5A;   /* navy as primary text */
+    --gray:      #5A4A6B;
+    --border:    rgba(26,36,114,0.18);
+  }
+
+/* ── BRANCHES ── */
+  #branches { background: var(--bg); }
+  .branches-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .branch-card {
+    border-radius: 8px;
+    border-top: 5px solid var(--red);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    transition: transform 0.3s;
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+  }
+  .branch-card:hover { transform: translateY(-4px); }
+  .branch-card-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+  }
+  .branch-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.80) 100%
+    );
+    z-index: 1;
+  }
+  .branch-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 36px 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .branch-num {
+    font-family: 'Pacifico', cursive; font-size: 48px;
+    color: rgb(255, 255, 255); line-height: 1; margin-bottom: 4px;
+  }
+  .branch-type {
+    font-family: 'Oswald', sans-serif; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red-light); margin-bottom: 6px;
+  }
+  .branch-name {
+    font-family: 'Pacifico', cursive; font-size: 28px;
+    color: #ffffff; margin-bottom: 4px;
+  }
+  .branch-address {
+    font-family: 'Nunito', sans-serif; font-size: 14px;
+    color: rgb(255, 255, 255); margin-bottom: 24px;
+  }
+  .info-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 10px;
+  }
+  .info-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .info-text {
+    font-family: 'Nunito', sans-serif; font-size: 13px;
+    color: rgba(255,255,255,0.88); line-height: 1.45;
+  }
+  .info-text a { color: #ffffff; text-decoration: none; font-weight: 700; }
+  .info-text a:hover { color: var(--red-light); }
+  .branch-amenities {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: auto; padding-top: 20px;
+  }
+  .amenity {
+    background: rgb(255, 255, 255);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-family: 'Oswald', sans-serif; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.30);
+  }
+
+  .social-links {
+    display: flex; gap: 16px; justify-content: center; margin-top: 56px; flex-wrap: wrap;
+  }
+  .social-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--red); color: #ffffff;
+    padding: 14px 28px; text-decoration: none;
+    font-family: 'Oswald', sans-serif; font-size: 14px;
+    font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+    border-radius: 4px; transition: all 0.2s;
+    border: 2px solid transparent;
+  }
+  .social-btn:hover { background: var(--red-light); color: #ffffff; }
+
+  .gp-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── LOGO IMAGE STYLES ── */
+  .nav-logo-img {
+    height: 44px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+    transition: transform 0.2s;
+  }
+  .nav-logo-img:hover { transform: scale(1.04); }
+  a.nav-logo { line-height: 0; display: flex; align-items: center; }
+
+  .hero-logo-wrap { margin-bottom: 8px; }
+  .hero-logo-img {
+    max-width: min(520px, 88vw);
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 6px 32px rgba(0,0,0,0.55));
+  }
+
+  .about-logo-img {
+    width: 85%;
+    max-width: 340px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
+  }
+
+  .footer-logo-img-wrap { display: block; margin-bottom: 16px; line-height: 0; }
+  .footer-logo-img {
+    height: 70px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)) brightness(1.05);
+  }
+
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 201;
+  }
+  .hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: var(--bg);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    height: 64px;
+    background: var(--navy-dark);
+    border-bottom: 3px solid var(--red);
+    transition: all 0.3s;
+  }
+  nav.scrolled { height: 56px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+  /* nav-logo is now an image — see .nav-logo-img above */
+  a.nav-logo-text {
+    font-family: 'Pacifico', cursive;
+    font-size: 26px;
+    color: var(--bg);
+    text-decoration: none;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+  .nav-logo-text span { color: var(--red-light); }
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+  .nav-links a {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,235,189,0.8);
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: color 0.2s, background 0.2s;
+    border-radius: 4px;
+  }
+  .nav-links a:hover { color: var(--bg); background: rgba(200,34,42,0.2); }
+  .nav-order {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--navy-dark);
+    background: var(--bg);
+    padding: 9px 22px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-radius: 3px;
+  }
+  .nav-order:hover { background: var(--bg-dark); }
+
+  /* Mobile nav overlay */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--navy-dark);
+    z-index: 199;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 64px;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bg);
+    text-decoration: none;
+    padding: 14px 32px;
+    transition: color 0.2s;
+  }
+  .mobile-nav a:hover { color: var(--red-light); }
+  .mobile-nav .mobile-order {
+    margin-top: 20px;
+    background: var(--red);
+    color: white;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 16px 40px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--navy-dark);
+    overflow: hidden;
+    padding-top: 64px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,34,42,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 100% 50% at 0% 100%, rgba(26,36,114,0.8) 0%, transparent 60%),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 38px,
+        rgba(255,255,255,0.015) 38px,
+        rgba(255,255,255,0.015) 40px
+      );
+  }
+  /* American & Italian flag stripe accents */
+  .hero-stripe-top {
+    position: absolute; top: 64px; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(to right,
+      #BF0A30 0%, #BF0A30 33%,
+      #fff 33%, #fff 66%,
+      #002868 66%, #002868 100%);
+    opacity: 0.6;
+  }
+  .hero-stripe-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(to right,
+      #009246 0%, #009246 33%,
+      #fff 33%, #fff 66%,
+      #CE2B37 66%, #CE2B37 100%);
+    opacity: 0.6;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 24px;
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--red);
+    padding: 6px 20px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(64px, 12vw, 140px);
+    color: var(--bg);
+    line-height: 0.95;
+    margin-bottom: 4px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+  .hero-title .red { color: var(--red-light); }
+  .hero-tagline {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(16px, 3vw, 26px);
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--bg-dark);
+    margin: 16px 0 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-estd {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(255,235,189,0.6);
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .btn-primary {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    background: var(--red);
+    color: white;
+    padding: 16px 40px;
+    text-decoration: none;
+    border: 2px solid var(--red);
+    border-radius: 3px;
+    transition: all 0.25s;
+  }
+  .btn-primary:hover { background: var(--red-dark); border-color: var(--red-dark); transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    background: transparent;
+    color: var(--bg);
+    padding: 16px 40px;
+    text-decoration: none;
+    border: 2px solid rgba(255,235,189,0.4);
+    border-radius: 3px;
+    transition: all 0.25s;
+  }
+  .btn-ghost:hover { border-color: var(--bg); color: var(--bg); transform: translateY(-2px); }
+
+  .hero-badges {
+    display: flex; gap: 40px; margin-top: 56px;
+    justify-content: center; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s forwards;
+  }
+  .badge {
+    text-align: center;
+  }
+  .badge-num {
+    display: block;
+    font-family: 'Pacifico', cursive;
+    font-size: 36px;
+    color: var(--red-light);
+    line-height: 1;
+  }
+  .badge-label {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,235,189,0.6);
+    margin-top: 4px;
+  }
+  .badge-divider { width: 1px; background: rgba(255,235,189,0.2); }
+
+  .hero-scroll {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,235,189,0.4);
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    animation: bounce 2.2s infinite;
+  }
+  .hero-scroll::after {
+    content: ''; width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(200,34,42,0.6), transparent);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+  }
+
+  /* ── RIBBON SECTION ── */
+  .ribbon {
+    background: var(--red);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .ribbon-item {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: white;
+  }
+  .ribbon-icon { font-size: 20px; }
+  .ribbon-sep { color: rgba(255,255,255,0.35); font-size: 20px; }
+
+  /* ── SECTIONS GENERAL ── */
+  section { padding: 90px 32px; }
+  .container { max-width: 1160px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(32px, 5vw, 52px);
+    color: var(--navy-dark);
+    margin-bottom: 16px;
+    line-height: 1.15;
+  }
+  .section-title .accent { color: var(--red); }
+  .section-body {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--navy);
+    font-weight: 400;
+  }
+  .divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 0 auto 48px; width: fit-content;
+  }
+  .divider-line { width: 50px; height: 2px; background: var(--bg-dark); }
+  .divider-icon { color: var(--red); font-size: 18px; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    background: var(--navy-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+  .about-visual-inner {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--red-dark) 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px;
+    padding: 32px;
+  }
+  .about-visual-icon { font-size: 80px; }
+  .about-visual-text {
+    font-family: 'Pacifico', cursive;
+    font-size: 28px;
+    color: var(--bg);
+    text-align: center;
+  }
+  .about-frame {
+    position: absolute; inset: 12px;
+    border: 2px solid rgba(255,235,189,0.3);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .about-badge {
+    position: absolute; bottom: -16px; right: -16px;
+    width: 100px; height: 100px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border: 4px solid var(--bg);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .about-badge span:first-child {
+    font-family: 'Pacifico', cursive; font-size: 26px; color: white; line-height: 1;
+  }
+  .about-badge span:last-child {
+    font-family: 'Oswald', sans-serif; font-size: 9px; letter-spacing: 2px; color: rgba(255,255,255,0.8); text-transform: uppercase;
+  }
+  .about-text .section-title { margin-top: 12px; }
+  .about-text .section-body { margin-bottom: 20px; }
+  .features-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px;
+  }
+  .feature {
+    background: rgba(255,255,255,0.75);
+    border-radius: 6px;
+    padding: 18px;
+    border-left: 4px solid var(--red);
+    box-shadow: 0 2px 12px rgba(26,36,114,0.08);
+  }
+  .feature-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--navy-dark);
+    margin-bottom: 4px;
+  }
+  .feature-text {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px; color: var(--gray);
+  }
+
+  /* ── GALLERY ── */
+  #gallery {
+    background: var(--navy-dark);
+    padding: 80px 32px;
+  }
+  #gallery .section-label { color: var(--bg-dark); text-align: center; display: block; }
+  #gallery .section-title { color: var(--bg); text-align: center; }
+  #gallery .section-title .accent { color: var(--red-light); }
+  #gallery .divider-line { background: var(--red); opacity: 0.5; }
+  #gallery .divider-icon { color: var(--bg-dark); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 260px 260px;
+    gap: 8px;
+    margin-top: 48px;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .gallery-item.tall { grid-row: span 2; }
+  .gallery-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px;
+    transition: transform 0.4s;
+  }
+  .gallery-item:hover .gallery-placeholder { transform: scale(1.04); }
+  .gp-1 { background: linear-gradient(135deg, #8B1219, #C8222A); }
+  .gp-2 { background: linear-gradient(135deg, #0D1450, #1A2472); }
+  .gp-3 { background: linear-gradient(135deg, #1A2472, #2E3D9E); }
+  .gp-4 { background: linear-gradient(135deg, #9B1219, #C8222A); }
+  .gp-5 { background: linear-gradient(135deg, #0D1450, #2E3D9E); }
+  .gp-icon { font-size: 52px; opacity: 0.7; }
+  .gp-text {
+    font-family: 'Lora', serif; font-style: italic;
+    font-size: 17px; color: rgba(255,235,189,0.8);
+    text-align: center; padding: 0 16px;
+  }
+  .gallery-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 20px 16px 16px;
+    background: linear-gradient(transparent, rgba(13,20,80,0.85));
+    color: var(--bg);
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+    transform: translateY(100%); transition: transform 0.3s;
+  }
+  .gallery-item:hover .gallery-caption { transform: translateY(0); }
+
+  /* ── MENU ── */
+  #menu { background: var(--bg); }
+  .menu-hero-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 56px;
+  }
+  .mhc {
+    background: var(--navy-dark);
+    border-radius: 6px;
+    padding: 28px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid var(--red);
+  }
+  .mhc::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 10%, rgba(200,34,42,0.2), transparent 60%);
+  }
+  .mhc-icon {
+  width: calc(100% + 40px);
+  height: 160px;
+  margin: -28px -20px 16px -20px;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+}
+.mhc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.mhc:hover .mhc-img {
+  transform: scale(1.06);
+}
+  .mhc-label {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--bg-dark); margin-bottom: 6px;
+  }
+  .mhc-name {
+    font-family: 'Pacifico', cursive; font-size: 18px;
+    color: white; margin-bottom: 10px; line-height: 1.3;
+  }
+  .mhc-price {
+    font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700;
+    color: var(--red-light);
+  }
+
+  .menu-tabs {
+    display: flex; gap: 4px; margin-bottom: 48px;
+    border-bottom: 3px solid var(--bg-dark);
+    overflow-x: auto; padding-bottom: 0;
+    scrollbar-width: none;
+  }
+  .menu-tabs::-webkit-scrollbar { display: none; }
+  .menu-tab {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 12px 18px;
+    background: none; border: none; cursor: pointer;
+    color: var(--gray);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px; white-space: nowrap; transition: all 0.2s;
+  }
+  .menu-tab.active { color: var(--red); border-bottom-color: var(--red); }
+  .menu-tab:hover { color: var(--navy); }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+  .menu-cat-title {
+    font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--navy-dark);
+    border-bottom: 2px solid var(--bg-dark);
+    padding-bottom: 10px; margin-bottom: 16px; margin-top: 40px;
+  }
+  .menu-cat-title:first-child { margin-top: 0; }
+  .menu-items { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .menu-item {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.7);
+    border-left: 4px solid transparent;
+    gap: 12px;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .menu-item:hover {
+    background: white;
+    border-left-color: var(--red);
+    box-shadow: 0 2px 10px rgba(200,34,42,0.12);
+  }
+  .mi-name {
+    font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--charcoal); margin-bottom: 3px;
+  }
+  .mi-desc {
+    font-family: 'Nunito', sans-serif; font-size: 12px;
+    color: var(--gray); line-height: 1.4;
+  }
+  .mi-sizes {
+    font-family: 'Nunito', sans-serif; font-size: 11px;
+    color: var(--navy-light); margin-top: 4px; font-weight: 600;
+  }
+  .mi-price {
+    font-family: 'Oswald', sans-serif; font-size: 17px; font-weight: 700;
+    color: var(--red); white-space: nowrap;
+  }
+  .menu-note {
+    background: var(--navy-dark); color: var(--bg);
+    padding: 14px 18px; margin-top: 28px; border-radius: 4px;
+    font-family: 'Nunito', sans-serif; font-style: italic; font-size: 13px;
+  }
+  .menu-category { margin-bottom: 8px; }
+
+  /* ── REVIEWS ── */
+  #reviews { background: var(--navy-dark); }
+  #reviews .section-label { color: var(--bg-dark); }
+  #reviews .section-title { color: var(--bg); }
+  #reviews .section-title .accent { color: var(--red-light); }
+  #reviews .divider-line { background: rgba(255,235,189,0.3); }
+  #reviews .divider-icon { color: var(--bg-dark); }
+
+  .rating-summary {
+    display: flex; align-items: center; gap: 32px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,235,189,0.15);
+    border-top: 4px solid var(--red);
+    padding: 28px 32px; margin-bottom: 48px;
+    border-radius: 4px;
+    flex-wrap: wrap;
+  }
+  .rating-big {
+    text-align: center; min-width: 90px;
+    border-right: 1px solid rgba(255,235,189,0.15); padding-right: 32px;
+  }
+  .rating-num {
+    font-family: 'Pacifico', cursive; font-size: 68px;
+    color: var(--red-light); line-height: 1;
+  }
+  .stars { color: var(--red-light); font-size: 18px; margin: 6px 0 4px; }
+  .rating-count {
+    font-family: 'Oswald', sans-serif; font-size: 11px;
+    letter-spacing: 1px; color: rgba(255,255,255,0.4);
+  }
+  .rating-bars { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 180px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; }
+  .bar-label {
+    font-family: 'Oswald', sans-serif; font-size: 12px;
+    color: rgba(255,255,255,0.55); width: 70px; letter-spacing: 1px;
+  }
+  .bar { flex: 1; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; }
+  .bar-fill { height: 100%; background: var(--red); border-radius: 3px; }
+  .rating-platforms { min-width: 150px; }
+  .platform-item { display: flex; flex-direction: column; margin-bottom: 14px; }
+  .platform-name {
+    font-family: 'Oswald', sans-serif; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+  .platform-rating {
+    font-family: 'Pacifico', cursive; font-size: 20px; color: var(--bg);
+  }
+
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .review-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,235,189,0.1);
+    border-top: 4px solid var(--red);
+    padding: 28px;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .review-card:hover {
+    background: rgba(255,255,255,0.09);
+    transform: translateY(-4px);
+  }
+  .review-stars { color: var(--red-light); font-size: 16px; margin-bottom: 14px; }
+  .review-text {
+    font-family: 'Lora', serif; font-style: italic; font-size: 15px;
+    line-height: 1.65; color: rgba(250,240,176,0.85); margin-bottom: 18px;
+  }
+  .review-meta {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 8px; margin-bottom: 12px;
+  }
+  .review-author {
+    font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--bg); letter-spacing: 0.5px;
+  }
+  .review-source {
+    font-family: 'Nunito', sans-serif; font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+  .review-dishes { display: flex; gap: 6px; flex-wrap: wrap; }
+  .dish-tag {
+    background: rgba(200,34,42,0.2); color: var(--red-light);
+    font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    border: 1px solid rgba(200,34,42,0.3);
+  }
+
+ /* ── BRANCHES ── */
+  #branches { background: var(--bg); }
+  .branches-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .branch-card {
+    background: rgba(255,255,255,0.85);
+    border-radius: 8px;
+    padding: 36px 32px;
+    border-top: 5px solid var(--navy-dark);
+    box-shadow: 0 4px 24px rgba(26,36,114,0.12);
+    transition: transform 0.3s;
+  }
+  .branch-card:hover { transform: translateY(-4px); }
+  .branch-num {
+    font-family: 'Pacifico', cursive; font-size: 48px;
+    color: var(--bg-dark); line-height: 1; margin-bottom: 4px;
+  }
+  .branch-type {
+    font-family: 'Oswald', sans-serif; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 6px;
+  }
+  .branch-name {
+    font-family: 'Pacifico', cursive; font-size: 28px;
+    color: var(--white); margin-bottom: 4px;
+  }
+  .branch-address {
+    font-family: 'Nunito', sans-serif; font-size: 14px;
+    color: var(--white); margin-bottom: 24px;
+  }
+  .info-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 10px;
+  }
+  .info-icon { font-size: 16px; flex-shrink: 0; margin-top: -7px; }
+  .info-text {
+    font-family: 'Nunito', sans-serif; font-size: 13px; color: var(--white);
+    line-height: 1.45;
+  }
+  .info-text a { color: var(--white); text-decoration: none; font-weight: 700; }
+  .info-text a:hover { color: var(--red); }
+  .branch-amenities { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+  .amenity {
+    background: var(--navy-dark); color: var(--bg);
+    font-family: 'Oswald', sans-serif; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 3px;
+  }
+
+  .social-links {
+    display: flex; gap: 16px; justify-content: center; margin-top: 56px; flex-wrap: wrap;
+  }
+  .social-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--navy-dark); color: var(--bg);
+    padding: 14px 28px; text-decoration: none;
+    font-family: 'Oswald', sans-serif; font-size: 14px;
+    font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+    border-radius: 4px; transition: all 0.2s;
+    border: 2px solid transparent;
+  }
+  .social-btn:hover { background: var(--red); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal);
+    color: rgba(255,255,255,0.6);
+    padding: 56px 32px 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    max-width: 1160px;
+    margin: 0 auto 48px;
+  }
+  /* footer logo is now image — see .footer-logo-img */
+  .footer-logo-text {
+    font-family: 'Pacifico', cursive; font-size: 32px;
+    color: var(--bg); margin-bottom: 12px; display: block;
+  }
+  .footer-logo-text span { color: var(--red-light); }
+  .footer-tagline {
+    font-family: 'Lora', serif; font-style: italic;
+    font-size: 15px; color: rgba(255,255,255,0.45); margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .footer-social { display: flex; gap: 12px; }
+  .fsb {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.08);
+    color: var(--bg); font-family: 'Oswald', sans-serif;
+    font-size: 12px; font-weight: 600; text-decoration: none;
+    border-radius: 4px; transition: background 0.2s;
+  }
+  .fsb:hover { background: var(--red); }
+  .footer-col-title {
+    font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase; color: white;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--red); padding-bottom: 8px;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a {
+    font-family: 'Nunito', sans-serif; font-size: 14px;
+    color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--bg-dark); }
+  .footer-bottom {
+    max-width: 1160px; margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    font-family: 'Nunito', sans-serif; font-size: 12px;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .nav-order { display: none; }
+    .hamburger { display: flex; }
+
+    section { padding: 64px 20px; }
+    #gallery { padding: 64px 20px; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-visual { aspect-ratio: 16/9; order: -1; }
+    .about-badge { right: 12px; bottom: 12px; }
+
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 180px 180px 180px;
+    }
+    .gallery-item.tall { grid-row: span 1; }
+
+    .menu-hero-cards { grid-template-columns: 1fr 1fr; }
+    .menu-items { grid-template-columns: 1fr; }
+
+    .rating-summary { flex-direction: column; gap: 24px; }
+    .rating-big { border-right: none; border-bottom: 1px solid rgba(255,235,189,0.15); padding-right: 0; padding-bottom: 24px; }
+    .reviews-grid { grid-template-columns: 1fr; }
+
+    .branches-grid { grid-template-columns: 1fr; }
+
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+
+    .hero-badges { gap: 24px; }
+    .badge-divider { display: none; }
+
+    .ribbon { gap: 16px; padding: 14px 20px; }
+    .ribbon-sep { display: none; }
+  }
+  @media (max-width: 600px) {
+    .hero-title { font-size: clamp(52px, 15vw, 90px); }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
+    .menu-hero-cards { grid-template-columns: 1fr; }
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(5, 180px);
+    }
+    .features-grid { grid-template-columns: 1fr; }
+    .social-links { flex-direction: column; align-items: center; }
+    .social-btn { width: 100%; max-width: 320px; justify-content: center; }
+    .ribbon { flex-direction: column; gap: 10px; }
+    .branches-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#"><img src="aveneto-logo.jpg" alt="AVeneto Ameritalian Pasta & Pizza" class="nav-logo-img"></a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#branches">Branches</a></li>
+  </ul>
+  <a class="nav-order" href="https://www.facebook.com/avenetopizzeria/" target="_blank">Order Now</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#about" onclick="closeMobileNav()">Our Story</a>
+  <a href="#menu" onclick="closeMobileNav()">Menu</a>
+  <a href="#reviews" onclick="closeMobileNav()">Reviews</a>
+  <a href="#branches" onclick="closeMobileNav()">Branches</a>
+  <a class="mobile-order" href="https://www.facebook.com/avenetopizzeria/" target="_blank">Order Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-stripe-top"></div>
+  <div class="hero-stripe-bottom"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">★ Ameritalian · estd. 1983 ★</span>
+    <div class="hero-logo-wrap" style="opacity:0;animation:fadeUp 0.8s 0.4s forwards;">
+      <img src="aveneto-logo.jpg" alt="AVeneto Ameritalian Pasta & Pizza" class="hero-logo-img">
+    </div>
+    <p class="hero-tagline">Pasta &amp; Pizza · Made with Love</p>
+    <p class="hero-estd">Serving the Philippines since 1983 — where American heart meets Italian soul</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#menu">Explore Menu</a>
+      <a class="btn-ghost" href="#branches">Find a Branch</a>
+    </div>
+    <div class="hero-badges">
+      <div class="badge">
+        <span class="badge-num">40+</span>
+        <span class="badge-label">Years Serving</span>
+      </div>
+      <div class="badge-divider"></div>
+      <div class="badge">
+        <span class="badge-num">4.8</span>
+        <span class="badge-label">Google Rating</span>
+      </div>
+      <div class="badge-divider"></div>
+      <div class="badge">
+        <span class="badge-num">2</span>
+        <span class="badge-label">Locations</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- RIBBON -->
+<div class="ribbon">
+  <div class="ribbon-item"><span class="ribbon-icon">🍕</span> New York Style Pizza</div>
+  <span class="ribbon-sep">|</span>
+  <div class="ribbon-item"><span class="ribbon-icon">🍝</span> Authentic Pasta</div>
+  <span class="ribbon-sep">|</span>
+  <div class="ribbon-item"><span class="ribbon-icon">🍋</span> Fresh Lemonades</div>
+  <span class="ribbon-sep">|</span>
+  <div class="ribbon-item"><span class="ribbon-icon">🏠</span> Dine-in &amp; Takeaway</div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-visual-inner">
+          <img src="aveneto-logo.jpg" alt="AVeneto Logo" class="about-logo-img">
+        </div>
+        <div class="about-frame"></div>
+        <div class="about-badge">
+          <span>40+</span>
+          <span>Years</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="section-label">Our Story</span>
+        <h2 class="section-title">Ameritalian<br><span class="accent">Since 1983</span></h2>
+        <p class="section-body">AVeneto is more than a restaurant — it's where the bold spirit of America meets the soulful tradition of Italy. Born in 1983, we've been crafting pasta and pizza that feels like home for over four decades.</p>
+        <p class="section-body" style="margin-top:16px">Our kitchen stays true to the classics: slow-cooked marinara, hand-stretched dough, generous portions, and recipes that have never changed — because some things are perfect just the way they are.</p>
+        <div class="features-grid">
+          <div class="feature">
+            <div class="feature-title">Family Recipes</div>
+            <div class="feature-text">Unchanged since 1983 — because perfection needs no revision.</div>
+          </div>
+          <div class="feature">
+            <div class="feature-title">Fresh Ingredients</div>
+            <div class="feature-text">Quality sourced daily for every pasta, pizza, and plate.</div>
+          </div>
+          <div class="feature">
+            <div class="feature-title">NY-Style Pizza</div>
+            <div class="feature-text">Hand-tossed, generously topped, perfectly baked.</div>
+          </div>
+          <div class="feature">
+            <div class="feature-title">Huge Portions</div>
+            <div class="feature-text">Our guests always leave full — and smiling.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <span class="section-label">Our Food</span>
+    <h2 class="section-title">Fresh from <span class="accent">Our Kitchen</span></h2>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-icon">★</span>
+      <div class="divider-line"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item tall">
+        <div class="gallery-placeholder gp-1">
+          <img
+            src="pizza.jpg"
+            alt="New York Style Pizzas"
+            class="gp-img"
+          />
+        </div>
+        <div class="gallery-caption">Our Signature Pies</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-2">
+          <img
+            src="pasta.jpg"
+            alt="Classic Pastas"
+            class="gp-img"
+          />
+        </div>
+        <div class="gallery-caption">Pasta Selection</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-3">
+          <img
+            src="seafoods.jpg"
+            alt="Seafood Specials"
+            class="gp-img"
+          />
+        </div>
+        <div class="gallery-caption">Seafood Dishes</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-4">
+          <img
+            src="wings.jpg"
+            alt="Starters & Sides"
+            class="gp-img"
+          />
+        </div>
+        <div class="gallery-caption">Wings &amp; Starters</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-5">
+          <img
+            src="salad.jpg"
+            alt="Salads & Soups"
+            class="gp-img"
+          />
+        </div>
+        <div class="gallery-caption">Fresh Salads</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="container">
+    <span class="section-label">What We Serve</span>
+    <h2 class="section-title">Our <span class="accent">Menu</span></h2>
+    <div class="divider">
+      <div class="divider-line" style="background:var(--bg-dark)"></div>
+      <span class="divider-icon">★</span>
+      <div class="divider-line" style="background:var(--bg-dark)"></div>
+    </div>
+
+    <div class="menu-hero-cards">
+      <div class="mhc">
+        <div class="mhc-icon">
+          <img
+            src="classicpizza.jpg"
+            alt="Aveneto Classic Pizza"
+            class="mhc-img"
+          />
+        </div>
+        <div class="mhc-label">Fan Favourite</div>
+        <div class="mhc-name">Aveneto Classic Pizza</div>
+        <div class="mhc-price">from ₱170</div>
+      </div>
+      <div class="mhc">
+        <div class="mhc-icon">
+          <img
+            src="seafoodpar.jpg"
+            alt="Seafood Pasta Parmigiana"
+            class="mhc-img"
+          />
+        </div>
+        <div class="mhc-label">Must Try</div>
+        <div class="mhc-name">Seafood Pasta Parmigiana</div>
+        <div class="mhc-price">₱425</div>
+      </div>
+      <div class="mhc">
+        <div class="mhc-icon">
+          <img
+            src="platter.jpg"
+            alt="Aveneto Family Platter"
+            class="mhc-img"
+          />
+        </div>
+        <div class="mhc-label">Crowd Pleaser</div>
+        <div class="mhc-name">Aveneto Family Platter</div>
+        <div class="mhc-price">₱495</div>
+      </div>
+    </div>
+
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="showTab('starters', this)">Starters</button>
+      <button class="menu-tab" onclick="showTab('pizza', this)">Pizza</button>
+      <button class="menu-tab" onclick="showTab('pasta-marinara', this)">Pasta Marinara</button>
+      <button class="menu-tab" onclick="showTab('pasta-white', this)">Pasta White</button>
+      <button class="menu-tab" onclick="showTab('pasta-oilgarlic', this)">Oil &amp; Garlic</button>
+      <button class="menu-tab" onclick="showTab('pasta-pesto', this)">Nut-Pesto</button>
+      <button class="menu-tab" onclick="showTab('baked', this)">Baked &amp; Calzone</button>
+      <button class="menu-tab" onclick="showTab('burgers', this)">Burgers</button>
+    </div>
+
+    <!-- STARTERS -->
+    <div class="menu-panel active" id="tab-starters">
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Starters</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Potato Wedges</p></div><p class="mi-price">₱105</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Chicken Strips</p><p class="mi-desc">Strips of breaded chicken fingers served with our special sauce on the side.</p></div><p class="mi-price">₱235</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Baked Mussels</p><p class="mi-desc">Baked mussels covered in rich tomato sauce topped with melted mozzarella cheese.</p></div><p class="mi-price">₱205</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Spicy Baked Mussels</p><p class="mi-desc">Baked mussels with a kick of spice, topped with melted mozzarella.</p></div><p class="mi-price">₱205</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Cheddar Munchers</p><p class="mi-desc">Fried breaded cheddar and potato in tomato sauce.</p></div><p class="mi-price">₱220</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Onion Rings</p><p class="mi-desc">Fried onion rings with our homemade ranch dressing.</p></div><p class="mi-price">₱255</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Deep Fried Crabsticks</p><p class="mi-desc">Battered crabsticks with creamy ranch dressing on the side.</p></div><p class="mi-price">₱310</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Breaded Mozzarella Sticks</p><p class="mi-desc">Breaded mozzarella sticks served with tomato sauce.</p></div><p class="mi-price">₱320</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Chicken Wings</p><p class="mi-desc">Deep fried chicken wings and lollipops.</p></div><p class="mi-price">₱330</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Aveneto Family Platter ⭐</p><p class="mi-desc">Combination of chicken wings, crabsticks, cheddar munchers and french fries.</p></div><p class="mi-price">₱495</p></div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Soup &amp; Salad</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Cream of Tomato Soup</p><p class="mi-desc">Served hot.</p></div><p class="mi-price">₱205</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Tossed Salad</p><p class="mi-desc">Freshly tossed garden vegetables with your choice of dressing.</p></div><p class="mi-price">₱210</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Chef's Salad</p><p class="mi-desc">Rolled mozzarella, ham, salami, pepperoni and roast beef on fresh lettuce.</p></div><p class="mi-price">₱320</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Chicken Salad</p><p class="mi-desc">Breaded chicken breast with fresh vegetables in classic Caesar dressing.</p></div><p class="mi-price">₱330</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Seafood Salad</p><p class="mi-desc">Fresh vegetables with crabsticks, shrimps and mussels. Special house dressing.</p></div><p class="mi-price">₱355</p></div>
+        </div>
+      </div>
+      <div class="menu-note">🥗 Salad dressing choices: Italian · Thousand Island · Oil &amp; Vinegar · Ranch Caesar</div>
+    </div>
+
+    <!-- PIZZA -->
+    <div class="menu-panel" id="tab-pizza">
+      <div class="menu-category">
+        <h3 class="menu-cat-title">New York Style Pizzas</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Classic Cheese Pizza</p><div class="mi-sizes">Slice ₱150 · 10" ₱350 · 14" ₱530 · 16" ₱680</div></div><p class="mi-price">from ₱150</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Hawaiian Pizza</p><p class="mi-desc">Ham and pineapple.</p><div class="mi-sizes">Slice ₱160 · 10" ₱385 · 14" ₱575 · 16" ₱750</div></div><p class="mi-price">from ₱160</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Bacon Cheeseburger</p><p class="mi-desc">Ground beef and bacon.</p><div class="mi-sizes">Slice ₱160 · 10" ₱385 · 14" ₱575 · 16" ₱750</div></div><p class="mi-price">from ₱160</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Double Pepperoni</p><div class="mi-sizes">Slice ₱160 · 10" ₱385 · 14" ₱575 · 16" ₱750</div></div><p class="mi-price">from ₱160</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Howie's Special</p><p class="mi-desc">Double anchovies and garlic.</p><div class="mi-sizes">Slice ₱165 · 10" ₱400 · 14" ₱595 · 16" ₱790</div></div><p class="mi-price">from ₱165</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Taco Pizza</p><p class="mi-desc">Ground beef, tomatoes and onions.</p><div class="mi-sizes">Slice ₱165 · 10" ₱400 · 14" ₱595 · 16" ₱790</div></div><p class="mi-price">from ₱165</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Seafood Special</p><p class="mi-desc">Anchovies, shrimp and squid.</p><div class="mi-sizes">Slice ₱165 · 10" ₱400 · 14" ₱595 · 16" ₱790</div></div><p class="mi-price">from ₱165</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Aveneto Classic ⭐</p><p class="mi-desc">Pepperoni, mushroom, onions and bell pepper.</p><div class="mi-sizes">Slice ₱170 · 10" ₱415 · 14" ₱620 · 16" ₱825</div></div><p class="mi-price">from ₱170</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Quadruple Cheese</p><div class="mi-sizes">Slice ₱170 · 10" ₱415 · 14" ₱620 · 16" ₱825</div></div><p class="mi-price">from ₱170</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">New York Style</p><p class="mi-desc">Ground beef, ham, pepperoni, onions and bell pepper.</p><div class="mi-sizes">Slice ₱175 · 10" ₱430 · 14" ₱640 · 16" ₱860</div></div><p class="mi-price">from ₱175</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Vegetarian Pizza</p><p class="mi-desc">Mushroom, onions, bell pepper, tomatoes and olives.</p><div class="mi-sizes">Slice ₱175 · 10" ₱430 · 14" ₱640 · 16" ₱860</div></div><p class="mi-price">from ₱175</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">All-Meat Pizza</p><p class="mi-desc">Ground beef, pepperoni, meatballs, sausage and ham.</p><div class="mi-sizes">Slice ₱175 · 10" ₱430 · 14" ₱640 · 16" ₱860</div></div><p class="mi-price">from ₱175</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">New England's Best</p><p class="mi-desc">Ground beef, pepperoni, mushroom, onions, bell pepper and Hungarian sausage.</p><div class="mi-sizes">Slice ₱180 · 10" ₱445 · 14" ₱660 · 16" ₱900</div></div><p class="mi-price">from ₱180</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Aveneto Special ⭐</p><p class="mi-desc">Ground beef, pepperoni, mushroom, onions, bell pepper and ham.</p><div class="mi-sizes">Slice ₱180 · 10" ₱445 · 14" ₱660 · 16" ₱900</div></div><p class="mi-price">from ₱180</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Seafood Pesto Pie</p><p class="mi-desc">Mussels, shrimp and squid in pesto sauce.</p><div class="mi-sizes">10" ₱445 · 14" ₱660 · 16" ₱900</div></div><p class="mi-price">from ₱445</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Pizza Ala Puttanesca</p><p class="mi-desc">Capers, black olives, mushrooms, Italian plum tomatoes, anchovies, herbs in olive oil.</p><div class="mi-sizes">10" ₱445 · 14" ₱660 · 16" ₱900</div></div><p class="mi-price">from ₱445</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASTA MARINARA -->
+    <div class="menu-panel" id="tab-pasta-marinara">
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Pasta — Marinara Sauce</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Chicken Cutlet Parmigiana</p><p class="mi-desc">Marinara sauce.</p></div><p class="mi-price">₱425</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Meatball Parmigiana</p><p class="mi-desc">Marinara sauce.</p></div><p class="mi-price">₱425</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Seafood Pasta Parmigiana ⭐</p><p class="mi-desc">Marinara sauce.</p></div><p class="mi-price">₱425</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Meat Sauce Parmigiana</p><p class="mi-desc">Marinara sauce.</p></div><p class="mi-price">₱425</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Italian Sausage Parmigiana</p><p class="mi-desc">Marinara sauce.</p></div><p class="mi-price">₱425</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Hungarian Sausage Parmigiana</p><p class="mi-desc">Marinara sauce.</p></div><p class="mi-price">₱425</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Eggplant Parmigiana</p><p class="mi-desc">Marinara sauce.</p></div><p class="mi-price">₱410</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Lasagna ⭐</p><p class="mi-desc">3 layers of lasagna sheets stuffed with ground baked beef, ricotta and mozzarella in rich marinara.</p></div><p class="mi-price">₱430</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Spaghetti Ala Puttanesca</p><p class="mi-desc">Capers, black olives, mushrooms, Italian plum tomatoes and anchovies in olive oil.</p></div><p class="mi-price">₱395</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASTA WHITE -->
+    <div class="menu-panel" id="tab-pasta-white">
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Pasta — White Sauce</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Classic Carbonara</p><p class="mi-desc">Northern Italy's traditional rich, thick white sauce with bacon, mushrooms, onions and fresh herbs.</p></div><p class="mi-price">₱385</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Carbonara with Chicken</p><p class="mi-desc">Cooked with bacon bits, mushrooms and onions topped with chicken breast.</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Fettuccine Seafood &amp; Asparagus</p><p class="mi-desc">Classic Tarragon white cream sauce mixed with various seafood and vegetables.</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic Seafood In White Sauce</p><p class="mi-desc">A rich combination of garlic, seafood and white cream sauce.</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Shrimp In White Sauce</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Ham &amp; Bacon In White Sauce</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Hungarian Sausage In White Sauce</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Italian Sausage In White Sauce</p></div><p class="mi-price">₱415</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASTA OIL GARLIC -->
+    <div class="menu-panel" id="tab-pasta-oilgarlic">
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Pasta — Oil &amp; Garlic</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic (Plain)</p><p class="mi-desc">Extra virgin olive oil with freshly sautéed garlic, parsley and Parmesan cheese.</p></div><p class="mi-price">₱310</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Mushrooms</p></div><p class="mi-price">₱405</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Anchovies</p></div><p class="mi-price">₱405</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Shrimp</p></div><p class="mi-price">₱405</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic Seafood</p></div><p class="mi-price">₱405</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Hungarian Sausage</p></div><p class="mi-price">₱405</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic W/ Italian Sausage</p></div><p class="mi-price">₱405</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic With Eggplant</p></div><p class="mi-price">₱405</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Oil &amp; Garlic Special ⭐</p><p class="mi-desc">Fan favourite! Extra virgin olive oil, garlic, parsley and Parmesan — elevated.</p></div><p class="mi-price">₱415</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASTA PESTO -->
+    <div class="menu-panel" id="tab-pasta-pesto">
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Pasta — Nut-Pesto</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Nut-Pesto (Plain)</p><p class="mi-desc">Pasta with 5 varieties of nuts, freshly made pesto sauce in extra virgin olive oil.</p></div><p class="mi-price">₱335</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Nut-Pesto W/ Chicken ⭐</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Nut-Pesto W/ Seafood</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Nut-Pesto W/ Hungarian Sausage</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Nut-Pesto W/ Italian Sausage</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Nut-Pesto W/ Eggplant</p></div><p class="mi-price">₱415</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BAKED & CALZONE -->
+    <div class="menu-panel" id="tab-baked">
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Baked Ziti</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Baked Ziti With Meatballs</p><p class="mi-desc">Penne pasta in marinara sauce with mozzarella and ricotta cheese.</p></div><p class="mi-price">₱430</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Baked Ziti With Hungarian Sausage</p></div><p class="mi-price">₱430</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Baked Ziti With Chicken</p></div><p class="mi-price">₱430</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Baked Ziti With Meat Sauce</p></div><p class="mi-price">₱430</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Baked Ziti With Italian Sausage</p></div><p class="mi-price">₱430</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Baked Ziti With Eggplant</p></div><p class="mi-price">₱415</p></div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Calzone</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Classic Calzone</p><p class="mi-desc">Folded pizza dough filled with salami, pepperoni and two types of cheese with marinara sauce.</p></div><p class="mi-price">₱415</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Sausage &amp; Pepper Calzone</p><p class="mi-desc">Folded pizza dough stuffed with caramelized onions, sweet pepper, sausage, three cheeses and marinara sauce.</p></div><p class="mi-price">₱415</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BURGERS -->
+    <div class="menu-panel" id="tab-burgers">
+      <div class="menu-category">
+        <h3 class="menu-cat-title">Burgers (served with French Fries)</h3>
+        <div class="menu-items">
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Aveneto Burger</p><p class="mi-desc">Beef patty with fresh lettuce, tomatoes, onions, bacon and cheese on a sesame seed bun.</p></div><p class="mi-price">₱310</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">New England Burger</p><p class="mi-desc">Half-pound grilled beef patty topped with blue cheese, onions, tomatoes and bacon.</p></div><p class="mi-price">₱310</p></div>
+          <div class="menu-item"><div class="mi-info"><p class="mi-name">Philadelphia Burger</p><p class="mi-desc">Beef patty topped with mushrooms and onions on sesame seed hamburger bun.</p></div><p class="mi-price">₱310</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-note">⭐ = Recommended dish — Prices subject to change. Please confirm with your branch at time of visit.</div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="container">
+    <span class="section-label">What Our Guests Say</span>
+    <h2 class="section-title">Thousands of <span class="accent">Happy Tables</span></h2>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-icon">★</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="rating-summary">
+      <div class="rating-big">
+        <div class="rating-num">4.8</div>
+        <div class="stars">★★★★★</div>
+        <div class="rating-count">Google Rating</div>
+      </div>
+      <div class="rating-bars">
+        <div class="bar-row"><span class="bar-label">Food</span><div class="bar"><div class="bar-fill" style="width:96%"></div></div><span style="color:var(--red-light);font-size:13px;font-family:'Oswald',sans-serif">5/5</span></div>
+        <div class="bar-row"><span class="bar-label">Service</span><div class="bar"><div class="bar-fill" style="width:92%"></div></div><span style="color:var(--red-light);font-size:13px;font-family:'Oswald',sans-serif">5/5</span></div>
+        <div class="bar-row"><span class="bar-label">Atmosphere</span><div class="bar"><div class="bar-fill" style="width:84%"></div></div><span style="color:var(--red-light);font-size:13px;font-family:'Oswald',sans-serif">4/5</span></div>
+        <div class="bar-row"><span class="bar-label">Value</span><div class="bar"><div class="bar-fill" style="width:94%"></div></div><span style="color:var(--red-light);font-size:13px;font-family:'Oswald',sans-serif">5/5</span></div>
+      </div>
+      <div class="rating-platforms">
+        <div class="platform-item"><span class="platform-name">Google</span><span class="platform-rating">4.8 ★</span></div>
+        <div class="platform-item"><span class="platform-name">Facebook</span><span class="platform-rating">92% ♥</span></div>
+        <div class="platform-item"><span class="platform-name">TripAdvisor</span><span class="platform-rating">3.9 ★</span></div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Staff were so friendly and accommodating. The food servings were huge as usual and I love the taste. 10/10 will come back again."</p>
+        <div class="review-meta">
+          <span class="review-author">Google Reviewer</span>
+          <span class="review-source">Google · ₱1–500/pax</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Aveneto Classic pizza — served hot and fresh, crust was cooked perfectly. Marinara Seafood Pasta Parmigiana — a perfect blend of tomato and seafoods. Onion rings — greatly seasoned with a crunchy outer coating."</p>
+        <div class="review-meta">
+          <span class="review-author">AVeneto Fan</span>
+          <span class="review-source">Restaurant Guru</span>
+        </div>
+        <div class="review-dishes">
+          <span class="dish-tag">Classic Pizza</span>
+          <span class="dish-tag">Seafood Pasta</span>
+          <span class="dish-tag">Onion Rings</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"A very homey Italian restaurant. The taste of their food has never changed ever since I ate here over the years. The price is reasonable for the serving."</p>
+        <div class="review-meta">
+          <span class="review-author">Long-time Regular</span>
+          <span class="review-source">Google · ₱800–1,000/pax</span>
+        </div>
+        <div class="review-dishes">
+          <span class="dish-tag">Nut-Pesto w/ Chicken</span>
+          <span class="dish-tag">Shrimp Garlic Pasta</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I love their pizza and pasta so much that I keep coming back again and again. Would definitely recommend to anyone craving quality Italian food in Manila!"</p>
+        <div class="review-meta">
+          <span class="review-author">Google Reviewer</span>
+          <span class="review-source">Google</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I'm a lover of pasta and pizza but not all restaurants can provide the same quality Aveneto does. I frequently order the baked seafood pasta and the ultimate 3-cheese pizza — simply unbeatable."</p>
+        <div class="review-meta">
+          <span class="review-author">TripAdvisor Reviewer</span>
+          <span class="review-source">TripAdvisor</span>
+        </div>
+        <div class="review-dishes">
+          <span class="dish-tag">Baked Seafood Pasta</span>
+          <span class="dish-tag">Quadruple Cheese Pizza</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The quality of the food has never changed, and the staff are always so accommodating. It's worth what you eat here — no corks, no leftovers. Their Onion Rings and Lemonade are also must-tries!"</p>
+        <div class="review-meta">
+          <span class="review-author">Verified Dine-in Guest</span>
+          <span class="review-source">Google · ₱200–400/pax</span>
+        </div>
+        <div class="review-dishes">
+          <span class="dish-tag">Family Platter</span>
+          <span class="dish-tag">Onion Rings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANCHES -->
+<section id="branches">
+  <div class="container">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Our <span class="accent">Branches</span></h2>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-icon">★</span>
+      <div class="divider-line"></div>
+    </div>
+    <div class="branches-grid">
+      <div class="branch-card">
+        <img class="branch-card-bg" src="maginhawa.webp" alt="Maginhawa Branch" />
+        <div class="branch-card-overlay"></div>
+        <div class="branch-card-content">
+          <div class="branch-num">01</div>
+          <p class="branch-type">★ Flagship Branch</p>
+          <h3 class="branch-name">Maginhawa, QC</h3>
+          <p class="branch-address">189 Maginhawa Street, Quezon City</p>
+          <div class="branch-info-rows">
+            <div class="info-row"><span class="info-icon">📞</span><span class="info-text"><a href="tel:09238312354">0923-831-2354</a></span></div>
+            <div class="info-row"><span class="info-icon">🕐</span><span class="info-text">Open Daily · Contact branch for current hours</span></div>
+            <div class="info-row"><span class="info-icon">📍</span><span class="info-text">Near Our Lady of the Most Holy Rosary of La Naval de Manila</span></div>
+            <div class="info-row"><span class="info-icon">⭐</span><span class="info-text">4.8 Google Rating · Original neighbourhood branch</span></div>
+          </div>
+          <div class="branch-amenities">
+            <span class="amenity">Dine-in</span>
+            <span class="amenity">Outdoor Seating</span>
+            <span class="amenity">Curbside Pickup</span>
+          </div>
+        </div>
+      </div>
+      <div class="branch-card">
+        <img class="branch-card-bg" src="sm.webp" alt="SM Mall of Asia Branch" />
+        <div class="branch-card-overlay"></div>
+        <div class="branch-card-content">
+          <div class="branch-num">02</div>
+          <p class="branch-type">★ Mall Branch</p>
+          <h3 class="branch-name">SM Mall of Asia</h3>
+          <p class="branch-address">South Wing, Level 1 — SM Mall of Asia, Pasay</p>
+          <div class="branch-info-rows">
+            <div class="info-row"><span class="info-icon">📞</span><span class="info-text"><a href="tel:09275329374">0927-532-9374</a></span></div>
+            <div class="info-row"><span class="info-icon">🕐</span><span class="info-text">Mon–Sun · Mall operating hours</span></div>
+            <div class="info-row"><span class="info-icon">📍</span><span class="info-text">South Wing, Level 1 North — SM Mall of Asia</span></div>
+            <div class="info-row"><span class="info-icon">⭐</span><span class="info-text">4.4 Google Rating · Near SM MOA Exploreum</span></div>
+          </div>
+          <div class="branch-amenities">
+            <span class="amenity">Dine-in</span>
+            <span class="amenity">Takeaway</span>
+            <span class="amenity">Group Dining</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a class="footer-logo-img-wrap" href="#"><img src="aveneto-logo.jpg" alt="AVeneto" class="footer-logo-img"></a>
+      <p class="footer-tagline">Serving authentic Ameritalian cuisine since 1983 — pasta, pizza, and everything in between.</p>
+      <div class="footer-social">
+        <a class="fsb" href="https://www.facebook.com/avenetopizzeria/" target="_blank">FB</a>
+        <a class="fsb" href="https://www.instagram.com/avenetopizzeria/" target="_blank">IG</a>
+      </div>
+    </div>
+    <div>
+      <p class="footer-col-title">Quick Links</p>
+      <ul class="footer-links">
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#gallery">Photo Gallery</a></li>
+        <li><a href="#menu">Full Menu</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#branches">Branches &amp; Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Contact</p>
+      <ul class="footer-links">
+        <li><a href="tel:09238312354">Maginhawa: 0923-831-2354</a></li>
+        <li><a href="tel:09275329374">MOA: 0927-532-9374</a></li>
+        <li><a href="https://www.facebook.com/share/14amvxkFs5W/">Facebook Page</a></li>
+        <li><a href="https://www.instagram.com/avenetopizzeria/">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 AVeneto Ameritalian Pasta &amp; Pizza. All rights reserved.</p>
+    <p>Prices &amp; menu subject to change without notice.</p>
+  </div>
+</footer>
+
+<script>
+  // Menu tab switching
+  function showTab(id, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+  });
+  function closeMobileNav() {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Sticky nav
+  window.addEventListener('scroll', () => {
+    document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.review-card, .branch-card, .mhc, .feature, .gallery-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
